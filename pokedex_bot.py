@@ -8,8 +8,6 @@ from discord.ext import commands
 intents = discord.Intents.default()
 intents.message_content = True
 
-#client = discord.Client(intents=intents)
-
 bot = commands.Bot(command_prefix='!', intents=intents)
 
 @bot.event
@@ -25,55 +23,6 @@ async def on_message(message):
         await message.channel.send('Hello!')
 
     await bot.process_commands(message)
-"""
-def load_type_weak(pokemon):
-    #pokemon = pb.pokemon('torterra')
-
-    s = ""
-    res = ""
-    for t in pokemon.types:
-        data = pb.type_(t.type.name)
-
-        arr = []
-
-        arr.append([x.name for x in data.damage_relations.double_damage_from])
-        
-        s = str(arr)
-        s = s.replace("[", "")
-        s = s.replace("]", "")
-        s = s.replace("'", "")
-
-        res = res + s 
-
-    if (res == ""):
-        res = "None"
-
-    return res
-
-def load_type_strong(pokemon):
-    #pokemon = pb.pokemon('torterra')
-
-    s = ""
-    res = ""
-    for t in pokemon.types:
-        data = pb.type_(t.type.name)
-
-        arr = []
-
-        arr.append([x.name for x in data.damage_relations.double_damage_to])
-        
-        s = str(arr)
-        s = s.replace("[", "")
-        s = s.replace("]", "")
-        s = s.replace("'", "")
-
-        res = res + s 
-
-    if (res == ""):
-        res = "None"
-
-    return res
-"""
 
 def get_desc(pokemon):
     data = pb.pokemon_species(pokemon)
@@ -82,6 +31,18 @@ def get_desc(pokemon):
 
     return res
 
+#display type chart
+@bot.command()
+async def types(ctx):
+    embed=discord.Embed(
+    title=f'Pokemon Type Effectiveness')
+    embed.add_field(name='', value='Every pokémon has a type, with some even having two. Depending on the type, a pokémon will be weaker or stronger against another.', inline=False)
+    embed.add_field(name='', value='[Weak to -> Type -> Strong against]', inline=False)
+    embed.set_image(url='https://i.pinimg.com/736x/93/55/60/935560d6f3cad2a3fa588b2fff5ababf--pokemon-type-chart-charts.jpg')
+    
+    await ctx.send(embed=embed)
+
+#search for a pokémon in the database
 @bot.command()
 async def find(ctx, poke_name):
     pokemon = pb.pokemon(poke_name.lower())
@@ -94,9 +55,9 @@ async def find(ctx, poke_name):
     embed.set_image(url=pokemon.sprites.other.home.front_default)
     
     embed.add_field(name="Type", value=pokemon_type)
+    #embed.add_field(name="Abilities", value=)
     embed.add_field(name="Description", value=pokemon_desc, inline=False)
     
-    #await ctx.send(f'{pokemon.name.capitalize()} is Pokémon #{pokemon.id}')
     await ctx.send(embed=embed)
 
 bot.run(config.token)
