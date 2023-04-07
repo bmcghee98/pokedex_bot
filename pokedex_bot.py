@@ -26,7 +26,12 @@ async def on_message(message):
 
 def get_desc(pokemon):
     data = pb.pokemon_species(pokemon)
-    res = data.flavor_text_entries[0].flavor_text
+    res = ""
+    
+    for x in data.flavor_text_entries:
+        if x.language.name == 'en':
+            res = res + x.flavor_text 
+            break
     res = ' '.join(res.splitlines())
 
     return res
@@ -35,7 +40,6 @@ def get_desc(pokemon):
 @bot.command()
 async def t(ctx, t):
     _type = pb.type_(t.lower())
-
     s1 = ", ".join([x.name.capitalize() for x in _type.damage_relations.double_damage_to])
     s2 = ", ".join([x.name.capitalize() for x in _type.damage_relations.double_damage_from])
     s3 = ", ".join([x.name.capitalize() for x in _type.damage_relations.no_damage_from])
@@ -57,7 +61,7 @@ async def t(ctx, t):
 async def types(ctx):
     embed=discord.Embed(
     title=f'Pokémon Type Effectiveness Chart')
-    embed.add_field(name='', value='Every pokémon has a type, with some even having two. Depending on the type, a pokémon will be weaker or stronger against another.', inline=False)
+    embed.add_field(name='', value='Every pokémon has a type, with some even having two. Depending on the type, a pokémon will be weaker or stronger against others.', inline=False)
     embed.add_field(name='', value='[Weak to -> Type -> Strong against]', inline=False)
     embed.set_image(url='https://i.pinimg.com/736x/93/55/60/935560d6f3cad2a3fa588b2fff5ababf--pokemon-type-chart-charts.jpg')
     embed.add_field(name='', value='To see info about a specific type, try using `!t <type>`', inline=False)
