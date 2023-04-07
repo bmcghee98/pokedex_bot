@@ -31,6 +31,27 @@ def get_desc(pokemon):
 
     return res
 
+#display type weaknesses/strengths
+@bot.command()
+async def t(ctx, t):
+    _type = pb.type_(t.lower())
+
+    s1 = ", ".join([x.name.capitalize() for x in _type.damage_relations.double_damage_to])
+    s2 = ", ".join([x.name.capitalize() for x in _type.damage_relations.double_damage_from])
+    s3 = ", ".join([x.name.capitalize() for x in _type.damage_relations.no_damage_from])
+    s4 = ", ".join([x.name.capitalize() for x in _type.damage_relations.no_damage_to])
+
+    file = discord.File(f'icons/Pokemon_Type_Icon_{t.capitalize()}.png', filename="image.png")
+
+    embed=discord.Embed(
+    title=f'{_type.name.capitalize()} Type Pokémon')
+    embed.set_thumbnail(url="attachment://image.png")
+    embed.add_field(name=''
+                    ,value=f"**Strong Against:** {s1}\n**Weak Against:** {s2}\n**No Damage From:** {s3}\n**No Damage To:** {s4}"
+                    ,inline=False)
+    embed.add_field(name='', value='To see the Type Effectiveness Chart, try the `!types` command', inline=False)
+    await ctx.send(file=file, embed=embed)
+    
 #display type chart
 @bot.command()
 async def types(ctx):
@@ -39,6 +60,7 @@ async def types(ctx):
     embed.add_field(name='', value='Every pokémon has a type, with some even having two. Depending on the type, a pokémon will be weaker or stronger against another.', inline=False)
     embed.add_field(name='', value='[Weak to -> Type -> Strong against]', inline=False)
     embed.set_image(url='https://i.pinimg.com/736x/93/55/60/935560d6f3cad2a3fa588b2fff5ababf--pokemon-type-chart-charts.jpg')
+    embed.add_field(name='', value='To see info about a specific type, try the `!t <type>` command', inline=False)
     
     await ctx.send(embed=embed)
 
@@ -49,11 +71,9 @@ async def find(ctx, poke_name):
     pokemon_type = ", ".join([x.type.name.capitalize() for x in pokemon.types])
     pokemon_desc = get_desc(pokemon.id)
    
-
     embed=discord.Embed(
     title=f'{pokemon.name.capitalize()} #{pokemon.id}')
     embed.set_image(url=pokemon.sprites.other.home.front_default)
-    
     embed.add_field(name="Type", value=pokemon_type)
     #embed.add_field(name="Abilities", value=)
     embed.add_field(name="Description", value=pokemon_desc, inline=False)
