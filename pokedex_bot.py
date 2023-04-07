@@ -49,18 +49,18 @@ async def t(ctx, t):
     embed.add_field(name=''
                     ,value=f"**Strong Against:** {s1}\n**Weak Against:** {s2}\n**No Damage From:** {s3}\n**No Damage To:** {s4}"
                     ,inline=False)
-    embed.add_field(name='', value='To see the Type Effectiveness Chart, try the `!types` command', inline=False)
+    embed.add_field(name='', value='To see the Pokémon Type Effectiveness Chart, try using `!types`', inline=False)
     await ctx.send(file=file, embed=embed)
     
 #display type chart
 @bot.command()
 async def types(ctx):
     embed=discord.Embed(
-    title=f'Pokemon Type Effectiveness')
+    title=f'Pokémon Type Effectiveness Chart')
     embed.add_field(name='', value='Every pokémon has a type, with some even having two. Depending on the type, a pokémon will be weaker or stronger against another.', inline=False)
     embed.add_field(name='', value='[Weak to -> Type -> Strong against]', inline=False)
     embed.set_image(url='https://i.pinimg.com/736x/93/55/60/935560d6f3cad2a3fa588b2fff5ababf--pokemon-type-chart-charts.jpg')
-    embed.add_field(name='', value='To see info about a specific type, try the `!t <type>` command', inline=False)
+    embed.add_field(name='', value='To see info about a specific type, try using `!t <type>`', inline=False)
     
     await ctx.send(embed=embed)
 
