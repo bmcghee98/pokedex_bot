@@ -4,6 +4,7 @@ import discord
 import config
 import pokebase as pb
 from discord.ext import commands
+from api import *
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -23,7 +24,7 @@ async def on_message(message):
         await message.channel.send('Hello!')
 
     await bot.process_commands(message)
-
+"""
 def get_desc(pokemon):
     data = pb.pokemon_species(pokemon)
     res = ""
@@ -35,11 +36,12 @@ def get_desc(pokemon):
     res = ' '.join(res.splitlines())
 
     return res
-
+"""
 #display type weaknesses/strengths
 @bot.command()
 async def t(ctx, t):
-    _type = pb.type_(t.lower())
+    #_type = pb.type_(t.lower())
+    _type = get_type(t.lower())
     s1 = ", ".join([x.name.capitalize() for x in _type.damage_relations.double_damage_to])
     s2 = ", ".join([x.name.capitalize() for x in _type.damage_relations.double_damage_from])
     s3 = ", ".join([x.name.capitalize() for x in _type.damage_relations.no_damage_from])
@@ -71,7 +73,8 @@ async def types(ctx):
 #search for a pokémon in the database
 @bot.command()
 async def find(ctx, poke_name):
-    pokemon = pb.pokemon(poke_name.lower())
+    #pokemon = pb.pokemon(poke_name.lower())
+    pokemon = get_pokemon(poke_name.lower())
     pokemon_type = ", ".join([x.type.name.capitalize() for x in pokemon.types])
     pokemon_desc = get_desc(pokemon.id)
    
