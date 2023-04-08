@@ -1,8 +1,5 @@
 import requests
 
-#pokemon_url = "https://pokeapi.co/api/v2/pokemon/"
-#type_url = "https://pokeapi.co/api/v2/type/"
-
 def get_pokemon(poke_name):
     pokemon_url = "https://pokeapi.co/api/v2/pokemon/" 
     pokemon_url += poke_name

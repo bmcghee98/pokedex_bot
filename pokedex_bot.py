@@ -2,7 +2,6 @@
 
 import discord
 import config
-import pokebase as pb
 from discord.ext import commands
 from api import *
 
@@ -76,13 +75,18 @@ async def find(ctx, poke_name):
     pokemon = get_pokemon(poke_name.lower())
     pokemon_type = ", ".join([x["type"]["name"].capitalize() for x in pokemon["types"]])
     pokemon_desc = _desc(str(pokemon["id"]))
+    pokemon_abilities = ", ".join([x["ability"]["name"] for x in pokemon["abilities"]])
+    pokemon_abilities = pokemon_abilities.replace("-", " ").title()
     
     embed=discord.Embed(
-    title=f'{pokemon["name"].capitalize()} #{pokemon["id"]}')
+    title=f'{pokemon["name"].replace("-"," ").title()} #{pokemon["id"]}')
     embed.set_image(url=pokemon["sprites"]["other"]["home"]["front_default"])
     embed.add_field(name="Type", value=pokemon_type)
-    #embed.add_field(name="Abilities", value=)
+    embed.add_field(name="Abilities", value=pokemon_abilities, inline=False)
     embed.add_field(name="Description", value=pokemon_desc, inline=False)
     await ctx.send(embed=embed)
+
+async def on_message_error(ctx, error):
+    await ctx.send(f"Unable to find :( Please try again.")
 
 bot.run(config.token)
