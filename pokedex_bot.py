@@ -24,33 +24,33 @@ async def on_message(message):
         await message.channel.send('Hello!')
 
     await bot.process_commands(message)
-"""
-def get_desc(pokemon):
-    data = pb.pokemon_species(pokemon)
+
+def _desc(pokemon):
+    data = get_desc(pokemon)
     res = ""
     
-    for x in data.flavor_text_entries:
-        if x.language.name == 'en':
-            res = res + x.flavor_text 
-            break
+    for x in data["flavor_text_entries"]:
+            if x["language"]["name"] == 'en':
+                res = res + x["flavor_text"]
+                break
+    
     res = ' '.join(res.splitlines())
 
     return res
-"""
+
 #display type weaknesses/strengths
 @bot.command()
 async def t(ctx, t):
-    #_type = pb.type_(t.lower())
     _type = get_type(t.lower())
-    s1 = ", ".join([x.name.capitalize() for x in _type.damage_relations.double_damage_to])
-    s2 = ", ".join([x.name.capitalize() for x in _type.damage_relations.double_damage_from])
-    s3 = ", ".join([x.name.capitalize() for x in _type.damage_relations.no_damage_from])
-    s4 = ", ".join([x.name.capitalize() for x in _type.damage_relations.no_damage_to])
 
+    s1 = ", ".join([x["name"].capitalize() for x in _type["damage_relations"]["double_damage_to"]])
+    s2 = ", ".join([x["name"].capitalize() for x in _type["damage_relations"]["double_damage_from"]])
+    s3 = ", ".join([x["name"].capitalize() for x in _type["damage_relations"]["no_damage_from"]])
+    s4 = ", ".join([x["name"].capitalize() for x in _type["damage_relations"]["no_damage_to"]])
     file = discord.File(f'icons/Pokemon_Type_Icon_{t.capitalize()}.png', filename="image.png")
 
     embed=discord.Embed(
-    title=f'{_type.name.capitalize()} Type Pokémon')
+    title=f'{_type["name"].capitalize()} Type Pokémon')
     embed.set_thumbnail(url="attachment://image.png")
     embed.add_field(name=''
                     ,value=f"**Strong Against:** {s1}\n**Weak Against:** {s2}\n**No Damage From:** {s3}\n**No Damage To:** {s4}"
@@ -73,18 +73,16 @@ async def types(ctx):
 #search for a pokémon in the database
 @bot.command()
 async def find(ctx, poke_name):
-    #pokemon = pb.pokemon(poke_name.lower())
     pokemon = get_pokemon(poke_name.lower())
-    pokemon_type = ", ".join([x.type.name.capitalize() for x in pokemon.types])
-    pokemon_desc = get_desc(pokemon.id)
-   
+    pokemon_type = ", ".join([x["type"]["name"].capitalize() for x in pokemon["types"]])
+    pokemon_desc = _desc(str(pokemon["id"]))
+    
     embed=discord.Embed(
-    title=f'{pokemon.name.capitalize()} #{pokemon.id}')
-    embed.set_image(url=pokemon.sprites.other.home.front_default)
+    title=f'{pokemon["name"].capitalize()} #{pokemon["id"]}')
+    embed.set_image(url=pokemon["sprites"]["other"]["home"]["front_default"])
     embed.add_field(name="Type", value=pokemon_type)
     #embed.add_field(name="Abilities", value=)
     embed.add_field(name="Description", value=pokemon_desc, inline=False)
-    
     await ctx.send(embed=embed)
 
 bot.run(config.token)
