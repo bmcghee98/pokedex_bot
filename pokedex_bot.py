@@ -42,13 +42,13 @@ def _desc(pokemon):
 
 @bot.command()
 async def pokeinfo(ctx):
-    file = discord.File(f'icons/pokedex.png', filename="image.png")
+    file = discord.File('icons/pokedex.png', filename="image.png")
     
     embed=discord.Embed(
     title='Pokédex Bot')
     embed.set_thumbnail(url="attachment://image.png")
     embed.add_field(name='Command List'
-                    ,value=f"`!find <pokemon>`: Do a quick search for a Pokémon\n`!t <pokemon_type>`: See info on a specific type of Pokémon\n`!types`: View the full Pokémon Type Effectiveness Chart\n`!pokeinfo`: See my commands"
+                    ,value="`!find <pokemon>`: Do a quick search for a Pokémon\n`!t <pokemon_type>`: See info on a specific type of Pokémon\n`!types`: View the full Pokémon Type Effectiveness Chart\n`!pokeinfo`: See my commands"
                     ,inline=False)
     embed.add_field(name='Disclaimer', value="I am still in beta, so some Pokémon may not show up. Don't worry, CoinnPurse will fix me soon!", inline=False)
     await ctx.send(file=file, embed=embed)
@@ -103,6 +103,6 @@ async def find(ctx, poke_name):
     await ctx.send(embed=embed)
 
 async def on_message_error(ctx, error):
-    await ctx.send(f"Unable to find :( Please try again.")
+    await ctx.send("Unable to find :( Please try again.")
 
 bot.run(config.token)
