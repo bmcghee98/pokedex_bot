@@ -20,7 +20,7 @@ async def on_message(message):
         return
 
     if message.content.startswith('$hello'):
-        await message.channel.send('Hello!')
+        await message.channel.send("Hello! I'm a bot made by CoinnPurse!\nI'm still in beta, so please be nice to me.\nBeep boop.\n\nUse `!info` to see my commands.")
 
     await bot.process_commands(message)
 
@@ -36,6 +36,19 @@ def _desc(pokemon):
     res = ' '.join(res.splitlines())
 
     return res
+
+@bot.command()
+async def info(ctx):
+    file = discord.File(f'icons/pokedex.png', filename="image.png")
+    
+    embed=discord.Embed(
+    title='Pokédex Bot')
+    embed.set_thumbnail(url="attachment://image.png")
+    embed.add_field(name='Command List'
+                    ,value=f"`!find <pokemon>`: Do a quick search for a Pokémon\n`!t <pokemon_type>`: See info on a specific type of Pokémon\n`!types`: View the full Pokémon Type Effectiveness Chart\n`!info`: See my commands"
+                    ,inline=False)
+    embed.add_field(name='Disclaimer', value="I am still in beta, so some Pokémon may not show up. Don't worry, CoinnPurse will fix me soon!", inline=False)
+    await ctx.send(file=file, embed=embed)
 
 #display type weaknesses/strengths
 @bot.command()
