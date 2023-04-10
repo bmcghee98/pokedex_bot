@@ -1,5 +1,5 @@
 # Pokédex Discord Bot
-Pokédex Bot is a Discord bot made as a quick and efficient way to query information about Pokémon. It uses Python's HTTP Requests library to retrieve JSON data from [The RESTful Pokémon API](https://pokeapi.co/). Once retrieved, the data is formatted and embedded into a Discord message using the discord.py library, and is then sent to the user.
+Pokédex Bot is a Discord bot made as a quick and efficient way to query information about Pokémon. It uses Python's HTTP Requests library to retrieve JSON data from [The RESTful Pokémon API](https://pokeapi.co/). Once retrieved, the data is formatted and embedded into a Discord message using the discord.py library, which is then sent to the user.
 
 ## Command List
 
