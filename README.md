@@ -8,5 +8,5 @@ Pokédex Bot is a Discord bot made as a quick and efficient way to query informa
 `!types`: View the full Pokémon Type Effectiveness Chart <br>
 `!pokeinfo`: See the command list
 
-<a href="url"><img src="https://github.com/bmcghee98/pokedex_bot/blob/master/screenshots/Screenshot_5.png" height="700" width="450" ></a>
-<a href="url"><img src="https://github.com/bmcghee98/pokedex_bot/blob/master/screenshots/Screenshot_6.png"  height="700" width="450" ></a>
+<a href="url"><img src="https://github.com/bmcghee98/pokedex_bot/blob/master/screenshots/Screenshot_5.png" height="700" width="500" ></a>
+<a href="url"><img src="https://github.com/bmcghee98/pokedex_bot/blob/master/screenshots/Screenshot_6.png"  height="700" width="500" ></a>
